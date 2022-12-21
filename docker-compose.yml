@@ -1,0 +1,40 @@
+---
+services:
+  postgres:
+    env_file:
+      - ./.env_db
+    image: "postgres:12"
+
+  redis:
+    image: "redis:6"
+
+  django:
+    env_file:
+      - ./.env_app
+    build: "."
+    command: gunicorn app.wsgi:application --bind 0.0.0.0:8000
+    depends_on:
+      - postgres
+      - redis
+    expose:
+      - "8000"
+    volumes:
+      - "./app/:/app/"
+      - "static:/app/static"
+      - "media:/app/media"
+
+  nginx:
+    build: ./nginx
+    ports:
+      - "80:80"
+    volumes:
+      - "static:/app/static"
+      - "media:/app/media"
+    depends_on:
+      - django
+
+volumes:
+  static:
+  media:
+
+version: "3.3"
