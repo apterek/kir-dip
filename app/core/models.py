@@ -30,7 +30,7 @@ class Department(models.Model):
 
 class Personal(models.Model):
     id_pers = models.AutoField(primary_key=True)
-    name = models.CharField(null=False, max_length=100)
+    name = models.ForeignKey("User", on_delete=models.CASCADE, blank=True, null=True)
     dep_id = models.ForeignKey("Department", on_delete=models.CASCADE, blank=True, null=True)
 
     class Meta:
@@ -68,7 +68,8 @@ class Cameras(models.Model):
     cam_model = models.CharField(null=False, max_length=100)
     addr = models.GenericIPAddressField()
     cab_id = models.ForeignKey("Cabinets", on_delete=models.CASCADE, blank=True, null=True)
-    in_pos = models.BooleanField()
+    in_pos = models.BooleanField(default=False)
+    status = models.BooleanField(default=False)
 
     class Meta:
         verbose_name = "Cameras"
@@ -80,6 +81,7 @@ class DateTimeStamp(models.Model):
     per_id = models.ForeignKey("Personal", on_delete=models.CASCADE, blank=True, null=True)
     cab_id = models.ForeignKey("Cabinets", on_delete=models.CASCADE, blank=True, null=True)
     cam_id = models.ForeignKey("Cameras", on_delete=models.CASCADE, blank=True, null=True)
+    direction = models.BooleanField(default=False)
 
     class Meta:
         verbose_name = "DateTimeStamp"
