@@ -1,0 +1,148 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+a {
+  text-decoration: none;
+  color: #000;
+}
+
+a:hover {
+  color: rgb(37, 29, 29);
+}
+
+.header {
+  position: sticky;
+  top: 0;
+  background-color: rgb(108, 108, 221);
+  -webkit-box-shadow: 0px 10px 8px 0px rgba(34, 60, 80, 0.2);
+  -moz-box-shadow: 0px 10px 8px 0px rgba(34, 60, 80, 0.2);
+  box-shadow: 0px 10px 8px 0px rgba(34, 60, 80, 0.2);
+}
+
+.header-box {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 1rem;
+}
+
+.header__h1 {
+  text-align: center;
+  width: 100%;
+  font-size: 3rem;
+  color: #000;
+}
+
+.header__btn {
+  position: absolute;
+  right: 1rem;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 5px;
+  background-color: rgb(63, 63, 175);
+  font-size: 1rem;
+  color: #fff;
+  cursor: pointer;
+}
+
+.header__btn:hover {
+  background-color: rgb(8, 8, 78);
+}
+
+.main {
+  display: flex;
+  flex-grow: 1;
+  min-height: 30vh;
+  background-color: rgb(193, 202, 206);
+}
+
+.nav {
+  position: fixed;
+  width: 15rem;
+  max-width: 100%;
+  height: 100%;
+  background-color: rgb(112, 164, 207);
+  -webkit-box-shadow: 10px 0px 8px 0px rgba(34, 60, 80, 0.2);
+  -moz-box-shadow: 10px 0px 8px 0px rgba(34, 60, 80, 0.2);
+  box-shadow: 10px 0px 8px 0px rgba(34, 60, 80, 0.2);
+}
+
+.ul {
+  height: 100%;
+  padding: 1rem;
+}
+
+.li {
+  padding-bottom: 1rem;
+  font-size: 2rem;
+  list-style-type: none;
+}
+
+.section {
+  width: 100%;
+  min-height: 30vh;
+  padding: 1rem;
+}
+
+.main__div {
+  margin: 0 30rem 0 15rem;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+th,
+td {
+  padding: 0.5rem 1rem;
+  border: 1px solid #000;
+}
+
+.search {
+  position: fixed;
+  top: 5rem;
+  right: 0.5rem;
+  width: 30rem;
+  max-width: 100%;
+  height: 90%;
+  padding: 1rem;
+  overflow: auto;
+  background-color: rgb(112, 164, 207);
+}
+
+.search__form {
+  display: flex;
+  flex-direction: column;
+}
+
+.input {
+  width: 100%;
+  height: 42px;
+  margin-bottom: 1rem;
+  padding-left: 10px;
+  border: 2px solid #286268;
+  border-radius: 5px;
+  outline: none;
+  background: #46caa9;
+  color: #000000;
+}
+
+.button {
+  margin: 0 0 1rem auto;
+  padding: 1rem 2rem;
+  background: #4a496d;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  cursor: pointer;
+}
