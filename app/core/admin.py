@@ -3,8 +3,8 @@ from core.models import Personal, Cabinets, Cameras, Faces, Department, DateTime
 
 @admin.register(Personal)
 class PersonalAdmin(admin.ModelAdmin):
-    list_display = ("name", "dep_id")
-    search_fields = ("name", "dep_id")
+    list_display = ("id_pers","name", "dep_id")
+    search_fields = ("id_pers","name__username", "dep_id__name")
     #readonly_fields = ("name", "dep_id")
 
 
@@ -16,23 +16,23 @@ class DepartmentAdmin(admin.ModelAdmin):
 
 @admin.register(Cabinets)
 class CabinetsAdmin(admin.ModelAdmin):
-    list_display = ("name", "floor", "dep_id", )
-    search_fields = ("name", "floor", "dep_id", )
+    list_display = ("id_cab","name", "floor", "dep_id", )
+    search_fields = ("id_cab","name", "floor",  "dep_id__name")
 
 
 @admin.register(Cameras)
 class CamerasAdmin(admin.ModelAdmin):
-    list_display = ("cam_model", "addr", "cab_id", "in_pos", "status", )
-    search_fields = ("cam_model", "addr", "cab_id", "in_pos", "status", )
+    list_display = ("id_cam","cam_model", "addr", "cab_id", "in_pos", "status", )
+    search_fields = ("id_cam","cam_model", "addr", "cab_id__name", "in_pos", "status", )
 
 
 @admin.register(Faces)
 class FacesAdmin(admin.ModelAdmin):
-    list_display = ("file", "face_data", "pers_id", )
-    search_fields = ("file", "face_data", "pers_id", )
+    list_display = ("file",  "pers_id", )
+    search_fields = ("file", "pers_id__id_pers", )
 
 
 @admin.register(DateTimeStamp)
 class DateTimeStampAdmin(admin.ModelAdmin):
     list_display = ("timedate", "per_id", "cab_id", "cam_id", "direction", )
-    search_fields = ("timedate", "per_id", "cab_id", "cam_id", "direction", )
+    search_fields = ("timedate", "per_id__id_pers", "cab_id__name", "cam_id__cam_model", "direction", )

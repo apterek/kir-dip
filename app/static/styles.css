@@ -94,12 +94,26 @@ a:hover {
 }
 
 .main__div {
-  margin: 0 30rem 0 15rem;
+  display: flex;
+  justify-content: center;
+  width: 100%;
 }
 
 table {
+  width: 100%;
+  margin: 1rem 30rem 0 15rem;
+  background-color: rgb(216, 216, 216);
   border-collapse: collapse;
   border-spacing: 0;
+}
+
+th {
+  font-size: 2rem;
+}
+
+td {
+  font-size: 1.5rem;
+  text-align: center;
 }
 
 th,

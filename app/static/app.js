@@ -1,6 +1,12 @@
 const h1 = document.getElementById('header__h1');
-const mainDiv = document.getElementById('main__div');
 const search = document.getElementById('search');
+const table = document.getElementById('table');
+
+const urlPersonal = 'personal';
+const urlUsers = 'users';
+const urlCameras = 'cameras';
+const urlCabinets = 'cabinets';
+const urlTime = 'time';
 
 class Router {
   routes = [];
@@ -92,83 +98,41 @@ const router = new Router({
 
 router
   .add(/main_page/, () => {
-    mainDiv.innerHTML = '';
-    h1.textContent = 'Main page';
-    mainDiv.style.marginRight = '1rem';
+    table.innerHTML = '';
+    h1.textContent = 'In-Out status';
+    table.style.marginRight = '1rem';
     search.style.display = 'none';
+    const resultsTime = getData(urlTime);
+    getTableHead(resultsTime);
+    getTableBody(resultsTime);
   })
   .add(/cameras_status/, () => {
-    mainDiv.innerHTML = '';
+    table.innerHTML = '';
     h1.textContent = 'Cameras status';
-    mainDiv.style.marginRight = '30rem';
+    table.style.marginRight = '30rem';
     search.style.display = '';
+    const resultsCamera = getData(urlCameras);
+    getTableHead(resultsCamera);
+    getTableBody(resultsCamera);
   })
   .add(/cabinets_status/, () => {
-    mainDiv.innerHTML = '';
+    table.innerHTML = '';
     h1.textContent = 'Cabinets status';
-    mainDiv.style.marginRight = '30rem';
+    table.style.marginRight = '30rem';
     search.style.display = '';
+    const resultsCabinets = getData(urlCabinets);
+    getTableHead(resultsCabinets);
+    getTableBody(resultsCabinets);
   })
   .add('', () => {
-    // mainDiv.innerHTML = '';
+    table.innerHTML = '';
     h1.textContent = 'Personal info';
-    mainDiv.style.marginRight = '30rem';
+    table.style.marginRight = '30rem';
     search.style.display = '';
-
-    // const table = document.createElement('table');
-    // const thead = document.createElement('thead');
-    // const tbody = document.createElement('tbody');
-
-    // table.appendChild(thead);
-    // table.appendChild(tbody);
-
-    // mainDiv.appendChild(table);
-
-    // let row_1 = document.createElement('tr');
-    // let heading_1 = document.createElement('th');
-    // heading_1.innerHTML = 'Sr. No.';
-    // let heading_2 = document.createElement('th');
-    // heading_2.innerHTML = 'Name';
-    // let heading_3 = document.createElement('th');
-    // heading_3.innerHTML = 'Company';
-
-    // row_1.appendChild(heading_1);
-    // row_1.appendChild(heading_2);
-    // row_1.appendChild(heading_3);
-    // thead.appendChild(row_1);
-
-    // let row_2 = document.createElement('tr');
-    // let row_2_data_1 = document.createElement('td');
-    // row_2_data_1.innerHTML = '1.';
-    // let row_2_data_2 = document.createElement('td');
-    // row_2_data_2.innerHTML = 'James Clerk';
-    // let row_2_data_3 = document.createElement('td');
-    // row_2_data_3.innerHTML = 'Netflix';
-
-    // row_2.appendChild(row_2_data_1);
-    // row_2.appendChild(row_2_data_2);
-    // row_2.appendChild(row_2_data_3);
-    // tbody.appendChild(row_2);
-
-    // let row_3 = document.createElement('tr');
-    // let row_3_data_1 = document.createElement('td');
-    // row_3_data_1.innerHTML = '2.';
-    // let row_3_data_2 = document.createElement('td');
-    // row_3_data_2.innerHTML = 'Adam White';
-    // let row_3_data_3 = document.createElement('td');
-    // row_3_data_3.innerHTML = 'Microsoft';
-
-    // row_3.appendChild(row_3_data_1);
-    // row_3.appendChild(row_3_data_2);
-    // row_3.appendChild(row_3_data_3);
-    // tbody.appendChild(row_3);
+    const resultsPersonal = getData(urlPersonal);
+    getTableHead(resultsPersonal);
+    getTableBody(resultsPersonal);
   });
-
-const urlPersonal = 'personal';
-const urlUsers = 'users';
-const urlCameras = 'cameras';
-const urlCabinets = 'cabinets';
-const urlTime = 'time';
 
 async function getData(url) {
   await fetch(`http://192.168.0.101/api/${url}/`, {
@@ -176,13 +140,11 @@ async function getData(url) {
     mode: 'cors',
     headers: {
       'Content-Type': 'application/json',
-      // 'Content-Type': 'application/x-www-form-urlencoded',
-      // 'Access-Control-Allow-Origin': true,
     },
   })
     .then((response) => {
       response.json().then((data) => {
-        return console.log(data); // удалить эту строку
+        return data.results;
       });
     })
     .catch((e) => {
@@ -190,8 +152,54 @@ async function getData(url) {
     });
 }
 
-getData(urlPersonal);
-// getData(urlUsers);
-// getData(urlCameras);
-// getData(urlCabinets);
-// getData(urlTime);
+function createCircle(value, tr) {
+  const td = document.createElement('td');
+  const circle = document.createElement('div');
+  circle.style.width = '1rem';
+  circle.style.height = '1rem';
+  circle.style.margin = '0 auto';
+  circle.style.backgroundColor = value ? 'green' : 'red';
+  circle.style.borderRadius = '50%';
+  td.appendChild(circle);
+  tr.appendChild(td);
+  return table.appendChild(tr);
+}
+
+function createTh(value, tr) {
+  const th = document.createElement('th');
+  th.innerHTML = value.toString().replaceAll('_', ' ');
+  tr.appendChild(th);
+  return table.appendChild(tr);
+}
+
+function createTd(value, tr) {
+  const td = document.createElement('td');
+  td.innerHTML = value.toString().replaceAll(',', ' ');
+  tr.appendChild(td);
+  return table.appendChild(tr);
+}
+
+function getTableHead(data) {
+  const keys = Object.keys(data[0]);
+  const tr = document.createElement('tr');
+  keys.forEach((key) => {
+    createTh(key, tr);
+  });
+}
+
+function getTableBody(data) {
+  data.forEach((item) => {
+    const values = Object.values(item);
+    const tr = document.createElement('tr');
+    values.forEach((value) => {
+      if (typeof value === 'object') {
+        const newValue = Object.values(value);
+        createTd(newValue, tr);
+      } else if (typeof value === 'boolean') {
+        createCircle(value, tr);
+      } else {
+        createTd(value, tr);
+      }
+    });
+  });
+}
